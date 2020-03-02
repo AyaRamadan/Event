@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+        <!-- <script src="./../jquery/dist/jquery.min.js"></script> -->
+       <%- include("../auth/adminHeader")-%>
+       <script>
+           function deleteEvent (ID,eventObject){
+           $.ajax({
+             url:"http://localhost:8083/event/delete",
+             method:"post",
+             contentType:"application/json",
+             data:JSON.stringify({ID}),
+             dataType:"json",
+             success:function(data){
+                //    console.log("Done");
+                $(eventObject).parents("tr").remove();
+             },
+             error:function(error){
+                console.log(error);
+             }
+           });
+        }
+       </script>
+    </head>
+    <body>
+        <table class="table text-center">
+            <thead class="bg-info">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Enent Date</th>
+                    <th>Main Speaker</th>
+                    <th>Other Speakers</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <%events.forEach(event=>{ %>
+                    <tr>
+                        <td><%= event._id%></td>
+                        <td><%= event.title%></td> 
+                        
+                        <td><%=moment(event.eventDate).utc().format('DD-MM-YYYY')%></td>
+                        <td><%= event.mainSpeaker.userName%></td> 
+                         <td>
+                             <ul>
+                             <% event.otherSpeaker.forEach(speaker=>{ %>
+                                    <li><%=speaker.userName%></li>
+                            <%  })%>
+                             </ul>
+                        </td>                    
+                        <td><a class="btn btn-success" href="/event/edit/<%=event._id%>">Edit</a></td>
+                        <td><a class="btn btn-danger" href="#" onclick="deleteEvent(<%= event._id%>,this)">Delete</a></td>
+                        
+                    </tr>
+              <%  })%>
+                
+            </tbody>
+            <tfoot class="bg-info">
+                <tr>
+                    <th colspan="4"> Event Schedule </th>
+                </tr>
+            </tfoot>
+        </table>
+    </body>
+    <script src="/jquery/dist/jquery.min.js"></script>
+</html>

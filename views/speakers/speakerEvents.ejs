@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+         <link href="/css/bootstrap.css" rel="stylesheet" />
+         <link href="/css/font-awesome.css" rel="stylesheet" />
+      
+       <script
+       src="https://code.jquery.com/jquery-3.4.1.min.js"
+       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+       crossorigin="anonymous"></script>
+           
+           
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar navbar-light" style="background-color: #8dc1e6;">
+            <a class="navbar-brand" href="#">Your Events</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                        
+               
+              </ul>
+              <form class="form-inline my-2 my-lg-0">       
+                <label style="border: 1px solid rgb(70, 40, 139) ; margin-right: 5px; padding: 5px; color:rgb(77, 40, 138);"> Welcome </label>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/logout">LogOut</a></button>
+              </form>
+            </div>
+          </nav>
+        <table class="table text-center">
+            <thead class="bg-info">
+                <tr>
+                    <th>Event Title</th>
+                    <th>Event Date</th>
+                    <th>Main Speaker</th>
+                    <th>other Speaker</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%speakerEvents.forEach(speakerEvent=>{ %>
+                    <tr>
+                        <td><%=speakerEvent.title%></td>
+                        <td><%=moment(speakerEvent.eventDate).utc().format('DD-MM-YYYY')%></td>
+                        
+                        <td><%=speakerEvent.mainSpeaker.userName%></td>
+                        <td>
+                            <ul>
+                            <% speakerEvent.otherSpeaker.forEach(speaker=>{ %>
+                                   <li><%=speaker.userName%></li>
+                           <%  })%>
+                            </ul>
+                       </td> 
+                        
+                    </tr>
+              <%  }) %>
+                
+            </tbody>
+            <tfoot class="bg-info">
+                <tr>
+                    <th colspan="3"></th>
+                </tr>
+            </tfoot>
+        </table>
+    </body>
+</html>
