@@ -58,13 +58,21 @@ authenticationRouter.post("/login",function(request,response,next){
 //Registeration get
 authenticationRouter.get("/register",function(request,response){
     // response.send("/register,get");
-    response.redirect("/speaker/add");
+    // response.redirect("/speaker/add");
+    response.render(`auth/register`);
 });
-//Registeration post
-// authenticationRouter.post("/register",function(request,response){
+// Registeration post
+authenticationRouter.post("/register",function(request,response){
     
-//     response.send("/register,post");
-// });
+    // response.send("/register,post");
+    let speakerModelobj=new authModel(request.body).save()
+    .then((data)=>{
+        response.render("auth/login");
+    })
+    .catch((error)=>{
+        console.log(error+"");
+    }) ;  
+});
 
 //logout get
 authenticationRouter.get("/logout",function(request,response){

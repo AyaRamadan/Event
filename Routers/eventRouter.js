@@ -5,6 +5,8 @@ eventModel=mongoose.model("events");
 let speakerModel=mongoose.model("speakers");
 const eventRouter=express.Router();
 
+eventRouter.use((request,response,next) =>{
+    if(request.session.role=="admin"){
 //Event List
 eventRouter.get("/list",function(request,response){
     // response.send("/Event list get");
@@ -85,6 +87,10 @@ eventRouter.post("/delete",function(request,response){
         console.log(error+"");
     }) ; 
 });
-
+    }else{
+        response.redirect("/login") ;
+     }
+    next();
+});
 //Module Exports
 module.exports=eventRouter;
